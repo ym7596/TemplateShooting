@@ -1,7 +1,15 @@
-public enum SceneData
+public enum sceneName
 {
-    title = 0,
-    lobby,
-    ingame,
-    loading,
+    
+    Title = 0,
+    Lobby,
+    InGame,
+    Loading,
+}
+
+public enum sceneLoadStatus
+{
+    None,
+    Loading,
+    Complete
 }
