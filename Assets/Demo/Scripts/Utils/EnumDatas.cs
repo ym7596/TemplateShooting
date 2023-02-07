@@ -3,8 +3,9 @@ public enum sceneName
     
     Title = 0,
     Lobby,
-    InGame,
     Loading,
+    InGame,
+   
 }
 
 public enum sceneLoadStatus
