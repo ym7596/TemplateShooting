@@ -13,4 +13,11 @@ MonoBehaviour:
   m_Name: ThirdPersonMovementSO
   m_EditorClassIdentifier: 
   gravity: 20
-  airControlPercent: 0
+  airControlPercent: 0.294
+  speed: 6
+  jumpVelocity: 20
+  speedSmoothTime: 0.1
+  turnSmoothTime: 0.1
+  speedSmoothVelocity: 0
+  turnSmoothVelocity: 0
+  currentVelocityY: 0
