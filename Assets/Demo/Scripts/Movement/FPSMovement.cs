@@ -10,17 +10,17 @@ public class FPSMovement : Movement
         throw new System.NotImplementedException();
     }
 
-    public override void MovementFixedUpdate(bool isGrounded, Vector2 moveInput)
+    public override void MovementFixedUpdate(Transform camArm,bool isGrounded, Vector2 moveInput)
     {
         throw new System.NotImplementedException();
     }
 
-    public override void OnAction(string action)
+    public override void OnAction(string action,bool isGrounded)
     {
         throw new System.NotImplementedException();
     }
 
-    public override void RotateFixedUpdate(Camera cam)
+    public override void RotateFixedUpdate(Transform _target, Camera cam,Vector2 mouseInput)
     {
         throw new System.NotImplementedException();
     }

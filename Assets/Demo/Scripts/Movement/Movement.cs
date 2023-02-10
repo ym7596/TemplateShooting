@@ -18,8 +18,6 @@ public abstract class Movement : ScriptableObject
     public float speedSmoothTime = 0.1f;
     public float turnSmoothTime = 0.1f;
 
-    public float speedSmoothVelocity;
-    public float turnSmoothVelocity;
 
     public float currentVelocityY;
     public float currentSpeed =>
@@ -35,11 +33,11 @@ public abstract class Movement : ScriptableObject
 
     public abstract void Disable();
 
-    public abstract void OnAction(string action);
+    public abstract void OnAction(string action,bool isGrounded);
 
-    public abstract void MovementFixedUpdate(bool isGrounded, Vector2 moveInput);
+    public abstract void MovementFixedUpdate(Transform camArm,bool isGrounded, Vector2 moveInput);
 
-    public abstract void RotateFixedUpdate(Camera cam);
+    public abstract void RotateFixedUpdate(Transform _target, Camera cam, Vector2 mouseInput);
 
    
 }

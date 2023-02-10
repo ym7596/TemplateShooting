@@ -11,13 +11,17 @@ public class InputPlayer : MonoBehaviour
     public string jumpBtnName = "Jump";
     public string reloadButtonName = "Reload";
 
+    public string mouseX = "Mouse X";
+    public string mouseY = "Mouse Y";
     public Vector2 moveInput { get; private set; }
+
+    public Vector2 mouseInput { get; private set; }
     public bool fire { get; private set; }
     public bool reload { get; private set; }
     public bool jump { get; private set; }
 
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (GameManager.instance != null
                 && GameManager.instance.isGameOver == true)
@@ -32,6 +36,8 @@ public class InputPlayer : MonoBehaviour
 
         moveInput = new Vector2(Input.GetAxis(moveHorizontalAxis),
             Input.GetAxis(moveVerticalAxis));
+
+        mouseInput = new Vector2(Input.GetAxis(mouseX), Input.GetAxis(mouseY));
 
         if (moveInput.sqrMagnitude > 1) moveInput = moveInput.normalized;
 

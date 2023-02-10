@@ -14,3 +14,9 @@ public enum sceneLoadStatus
     Loading,
     Complete
 }
+
+public enum currentView
+{
+    TPS,
+    FPS
+}

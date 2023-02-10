@@ -15,9 +15,7 @@ MonoBehaviour:
   gravity: 20
   airControlPercent: 0.294
   speed: 6
-  jumpVelocity: 20
+  jumpVelocity: 6
   speedSmoothTime: 0.1
   turnSmoothTime: 0.1
-  speedSmoothVelocity: 0
-  turnSmoothVelocity: 0
-  currentVelocityY: 0
+  currentVelocityY: -0.1962
