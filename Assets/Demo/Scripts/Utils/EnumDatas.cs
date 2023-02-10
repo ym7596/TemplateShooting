@@ -20,3 +20,12 @@ public enum currentView
     TPS,
     FPS
 }
+
+public enum playerState
+{
+    None = 0,
+    Idle,
+    Move,
+    Fire,
+    Die
+}
