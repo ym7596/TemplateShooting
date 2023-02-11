@@ -14,7 +14,7 @@ public class TPSMovement : Movement
     }
     public override void Disable()
     {
-        
+       
     }
 
     public override void MovementFixedUpdate(Transform camArm,bool isGrounded, InputPlayer inputData)
@@ -43,11 +43,14 @@ public class TPSMovement : Movement
 
     public override void OnFire(string action,State state, Transform spawnPoint)
     {
-        if(action == "Fire1" && state == State.Ready)
-            _animator.SetTrigger(action);
+        if (action == "Fire1" && state == State.Ready)
+            _animator.SetBool(action, true);
+        else
+        {
+            _animator.SetBool(action, false);
+        }
 
 
-     
     }
 
     public override void RotateFixedUpdate(Transform camArm,Camera cam, InputPlayer inputData)

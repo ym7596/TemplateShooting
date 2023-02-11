@@ -21,8 +21,12 @@ public class Gun : MonoBehaviour
         set
         {
             _currentBullet = value;
-            InGameUI.instance.bulletCnt =
-                string.Format("{0} / {1}", _currentBullet, _weaponData.bulletsPerMag);
+            if (InGameUI.instance)
+            {
+                InGameUI.instance.bulletCnt =
+               string.Format("{0} / {1}", _currentBullet, _weaponData.bulletsPerMag);
+            }
+           
         }
     }
 
@@ -72,8 +76,6 @@ public class Gun : MonoBehaviour
 
 
         }
-        Debug.Log("ASd2");
-    
         return false;
     }
 
@@ -81,7 +83,6 @@ public class Gun : MonoBehaviour
     {
         if(currentBullets > 0)
         {
-            Debug.Log("ASd");
             var Bullet = Instantiate(_weaponData.bulletPrefab,_spawnPoint);
             Bullet.GetComponent<Rigidbody>().AddForce(_spawnPoint.forward * _weaponData.bulletSpeed,ForceMode.Impulse);
             currentBullets -= 1;

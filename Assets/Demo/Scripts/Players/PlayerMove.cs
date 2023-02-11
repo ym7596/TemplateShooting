@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    private currentView _curView = currentView.FPS;
+    private currentView _curView = currentView.TPS;
     public currentView CurView
     {
         get { return _curView; }
@@ -43,17 +43,54 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-      //  _tpsMovement.Enable(_playerBody, _controller,_anim);
-        _fpsMovement.Enable(_playerBody, _controller, _anim);
+        InGameUI.instance._onSwitchViewtgl.onValueChanged.AddListener
+            (delegate { OnSwitchBtn(InGameUI.instance._onSwitchViewtgl.isOn); });
+        SwitchViewType(_curView);
+    }
+
+    private void Update()
+    {
+        OnReload(_playerInput.reload);
     }
 
     // Update is called once per frame
     void FixedUpdate()
-    {
-       
+    {  
         PlayerCamView(CurView);
+    }
 
-        OnReload(_playerInput.reload);
+    public void OnSwitchBtn(bool isFPS)
+    {
+        if (isFPS)
+        {
+            CurView = currentView.FPS;
+        }
+        else
+        {
+            CurView = currentView.TPS;
+        }
+        SwitchViewType(CurView);
+    }
+
+    private void SwitchViewType(currentView cView)
+    {
+        switch (cView)
+        {
+            case currentView.FPS:
+                {
+                    _fpsMovement.Enable(_playerBody, _controller, _anim);
+                    _tpsCam.gameObject.SetActive(false);
+                    _fpsCam.gameObject.SetActive(true);
+                }
+                break;
+            case currentView.TPS:
+                {
+                    _tpsMovement.Enable(_playerBody, _controller, _anim);
+                    _fpsCam.gameObject.SetActive(false);
+                    _tpsCam.gameObject.SetActive(true);
+                }
+                break;
+        }
     }
 
     private void OnReload(bool onReloadBtn)
@@ -93,6 +130,8 @@ public class PlayerMove : MonoBehaviour
             _gun.Fire(_bulletSpawnPoint);
             _fpsMovement.OnFire(_playerInput.fireBtnName, _gun.state, _bulletSpawnPoint);
         }
+        else
+            _anim.SetBool(_playerInput.fireBtnName, false);
             
     }
 
@@ -106,6 +145,8 @@ public class PlayerMove : MonoBehaviour
             _gun.Fire(_bulletSpawnPoint);
             _tpsMovement.OnFire(_playerInput.fireBtnName, _gun.state, _bulletSpawnPoint);
         }
-           
+        else
+            _anim.SetBool(_playerInput.fireBtnName, false);
+
     }
 }

@@ -19,6 +19,7 @@ public class UIManager : MonoBehaviour
         }
         else
         {
+            GameManager.instance.nickName = _nickName.text;
             MySceneManager.instance.LoadScene((int)sceneName.Loading);
         }
 

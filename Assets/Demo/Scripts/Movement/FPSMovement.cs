@@ -42,8 +42,12 @@ public class FPSMovement : Movement
     {
         if (action == "Fire1" && state == State.Ready)
         {
-            _animator.SetTrigger(action);
+            _animator.SetBool(action,true);
 
+        }
+        else
+        {
+            _animator.SetBool(action, false);
         }
             
     }
