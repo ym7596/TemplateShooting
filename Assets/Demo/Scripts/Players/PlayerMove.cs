@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerMove : MonoBehaviour
 {
-    private currentView _curView = currentView.TPS;
+    private currentView _curView = currentView.FPS;
     public currentView CurView
     {
         get { return _curView; }
@@ -16,6 +16,9 @@ public class PlayerMove : MonoBehaviour
     private CharacterController _controller;
 
     [SerializeField]
+    private Animator _anim;
+
+    [SerializeField]
     private InputPlayer _playerInput;
     [SerializeField]
     private Transform _playerBody;
@@ -24,7 +27,13 @@ public class PlayerMove : MonoBehaviour
 
     [SerializeField]
     private Camera _tpsCam;
+    [SerializeField]
+    private Camera _fpsCam;
 
+    [SerializeField]
+    private Gun _gun;
+    [SerializeField]
+    private Transform _bulletSpawnPoint;
     [SerializeField]
     private TPSMovement _tpsMovement;
     [SerializeField]
@@ -34,43 +43,69 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        _tpsMovement.Enable(_playerBody, _controller);
+      //  _tpsMovement.Enable(_playerBody, _controller,_anim);
+        _fpsMovement.Enable(_playerBody, _controller, _anim);
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
+       
         PlayerCamView(CurView);
+
+        OnReload(_playerInput.reload);
     }
 
-
+    private void OnReload(bool onReloadBtn)
+    {
+        if (onReloadBtn)
+        {
+            _gun.Reload();
+        }
+    }
     private void PlayerCamView(currentView _view)
     {
         switch (_view)
         {
             case currentView.TPS:
                 {
+                    _fpsCam.gameObject.SetActive(false);
+                    _tpsCam.gameObject.SetActive(true);
                     TPSMove();
                 }
                 break;
             case currentView.FPS:
                 {
+                    _tpsCam.gameObject.SetActive(false);
+                    _fpsCam.gameObject.SetActive(true);
                     FPSMove();
                 }
                 break;
         }
     }
     private void FPSMove()
-    {
+    {                                                  
+        _fpsMovement.RotateFixedUpdate(_tpscamArm, _tpsCam, _playerInput);
+        _fpsMovement.MovementFixedUpdate(_tpscamArm, _controller.isGrounded, _playerInput);
 
+        if (_playerInput.fire)
+        {
+            _gun.Fire(_bulletSpawnPoint);
+            _fpsMovement.OnFire(_playerInput.fireBtnName, _gun.state, _bulletSpawnPoint);
+        }
+            
     }
 
     private void TPSMove()
     {
-        _tpsMovement.RotateFixedUpdate(_tpscamArm, _tpsCam, _playerInput.mouseInput);
-        _tpsMovement.MovementFixedUpdate(_tpscamArm, _controller.isGrounded, _playerInput.moveInput);
+        _tpsMovement.RotateFixedUpdate(_tpscamArm, _tpsCam, _playerInput);
+        _tpsMovement.MovementFixedUpdate(_tpscamArm, _controller.isGrounded, _playerInput);
 
-        if (_playerInput.jump)
-            _tpsMovement.OnAction(_playerInput.jumpBtnName, _controller.isGrounded);
+        if (_playerInput.fire)
+        {
+            _gun.Fire(_bulletSpawnPoint);
+            _tpsMovement.OnFire(_playerInput.fireBtnName, _gun.state, _bulletSpawnPoint);
+        }
+           
     }
 }

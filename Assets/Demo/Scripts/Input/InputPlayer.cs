@@ -20,6 +20,7 @@ public class InputPlayer : MonoBehaviour
     public bool reload { get; private set; }
     public bool jump { get; private set; }
 
+    public bool IsMove => !Mathf.Approximately(moveInput.sqrMagnitude, 0f);
 
     private void FixedUpdate()
     {
