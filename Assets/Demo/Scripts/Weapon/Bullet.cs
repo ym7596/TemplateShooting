@@ -12,23 +12,24 @@ public class Bullet : MonoBehaviour
     private BulletInfo _bulletInfo;
 
     private Rigidbody _rigid;
+
+    public int bulletDamage { get; private set; }
     // Start is called before the first frame update
     void Start()
     {
         _rigid = GetComponent<Rigidbody>();
-        
+
+        bulletDamage = _bulletInfo.bulletDamage;
     }
 
-    private void OnCollisionEnter(Collision col)
+
+
+    private void OnTriggerEnter(Collider col)
     {
         GameObject particleOBJ = Instantiate(_bulletInfo.Explosion) as GameObject;
         particleOBJ.transform.position = transform.position;
         Destroy(particleOBJ, 1f);
-        int colLayer = col.gameObject.layer;
-        if(colLayer == LayerMask.NameToLayer("Enemy"))
-        {
-            
-        }
+
         Destroy(gameObject);
     }
 }

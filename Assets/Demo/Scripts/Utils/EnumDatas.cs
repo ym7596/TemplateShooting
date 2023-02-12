@@ -29,3 +29,10 @@ public enum playerState
     Fire,
     Die
 }
+
+public enum Winner
+{
+    None = 0,
+    Player,
+    Boss
+}

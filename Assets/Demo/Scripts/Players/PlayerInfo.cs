@@ -13,11 +13,39 @@ public class PlayerInfo : MonoBehaviour, Observer
 
     private HealthSub _subject = null;
 
+    private float _playerHP = 500;
+    private float _currentPlayerHP = 0f;
+    public float playerMaxHP { 
+        get 
+        {
+            return _playerHP;
+        }
+        set 
+        {
+            _playerHP = value;
+        } 
+    }
+
+    public float CurrentPlayerHP
+    {
+        get
+        {
+            return _currentPlayerHP;
+        }
+        set
+        {
+            _currentPlayerHP = value;
+            _hpSlider.value = _currentPlayerHP / playerMaxHP;
+            InGameUI.instance._playerSlider.value = _currentPlayerHP / playerMaxHP;
+        }
+    }
     public string NickName
     {
         get { return _nickName.text; }
         set { _nickName.text = value; }
     }
+
+    
 
     public void Init(HealthSub _subject)
     {
@@ -27,17 +55,32 @@ public class PlayerInfo : MonoBehaviour, Observer
     public void ObserverUpdate(float _myHP, float _enemyHP)
     {
         _hpSlider.value = _myHP;
+        InGameUI.instance._playerSlider.value = _myHP;
     }
 
     private void Start()
     {
+        CurrentPlayerHP += playerMaxHP;
+        StartCoroutine(SetNick());
+    }
+
+    IEnumerator SetNick()
+    {
+        yield return new WaitUntil(() => GameManager.instance);
         NickName = GameManager.instance.nickName;
     }
 
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider col)
     {
-        
+        int colLayer = col.gameObject.layer;
+        if (colLayer == LayerMask.NameToLayer("BossBullet"))
+        {
+            int damage = col.gameObject.GetComponent<Bullet>().bulletDamage;
+            CurrentPlayerHP -= damage;
+            HPStats.instance.SetChangeStat();
+            InGameUI.instance.PlayerHitEffect();
+        }
     }
+
 }

@@ -17,7 +17,6 @@ public class MySceneManager : SingleTon<MySceneManager>
     {
         base.Awake();
         DontDestroyOnLoad(gameObject);
-        Debug.Log("Dont");
     }
 
     public float ProgressNum
