@@ -36,3 +36,12 @@ public enum Winner
     Player,
     Boss
 }
+
+public enum bossState
+{
+    None = 0,
+    Idle,
+    Trace,
+    Attack,
+    Die
+}

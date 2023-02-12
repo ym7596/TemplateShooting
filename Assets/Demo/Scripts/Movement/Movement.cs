@@ -8,12 +8,11 @@ public abstract class Movement : ScriptableObject
     protected Transform _targetTransform;
 
     public float gravity = 20;
-    [Range(0.01f, 1f)]
-    public float airControlPercent;
+
 
 
     public float speed = 6f;
-    public float jumpVelocity = 20f;
+
 
     public float speedSmoothTime = 0.1f;
     public float turnSmoothTime = 0.1f;

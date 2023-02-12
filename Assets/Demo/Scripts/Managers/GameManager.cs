@@ -37,31 +37,35 @@ public class GameManager : SingleTon<GameManager>
 
     public void GameSet(Winner winner)
     {
-        isGameOver = true;
-        Debug.Log("GameOVer");
-        switch (winner)
+        if(isGameOver != true)
         {
-            case Winner.Player:
-                {
-                    winner = Winner.Player;
-                    if (InGameUI.instance)
+            isGameOver = true;
+            Debug.Log("GameOVer");
+            switch (winner)
+            {
+                case Winner.Player:
                     {
-                        InGameUI.instance.GameOverResult("YOU WIN!");
+                        winner = Winner.Player;
+                        if (InGameUI.instance)
+                        {
+                            InGameUI.instance.GameOverResult("YOU WIN!");
+                        }
                     }
-                }
-                break;
-            case Winner.Boss:
-                {
-                    winner = Winner.Boss;
-                    if (InGameUI.instance)
+                    break;
+                case Winner.Boss:
                     {
-                        InGameUI.instance.GameOverResult("YOU LOSE!");
+                        winner = Winner.Boss;
+                        if (InGameUI.instance)
+                        {
+                            InGameUI.instance.GameOverResult("YOU LOSE!");
+                        }
                     }
-                }
-                break;
-            default:
-                break;
+                    break;
+                default:
+                    break;
+            }
         }
+       
     }
 
 }

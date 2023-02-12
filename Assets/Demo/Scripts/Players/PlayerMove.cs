@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerMove : MonoBehaviour
 {
     private currentView _curView = currentView.TPS;
+
+    private playerState state = playerState.None;
     public currentView CurView
     {
         get { return _curView; }
@@ -43,6 +45,7 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        state = playerState.Idle;
         InGameUI.instance._onSwitchViewtgl.onValueChanged.AddListener
             (delegate { OnSwitchBtn(InGameUI.instance._onSwitchViewtgl.isOn); });
         SwitchViewType(_curView);
@@ -50,13 +53,46 @@ public class PlayerMove : MonoBehaviour
 
     private void Update()
     {
-        OnReload(_playerInput.reload);
+        if (GameManager.instance)
+        {
+            if (GameManager.instance.winner == Winner.Boss)
+            {
+                state = playerState.Die;
+            }
+        }
+        switch (state)
+        {
+            case playerState.Idle:
+            case playerState.Move:
+            case playerState.Fire:
+                OnReload(_playerInput.reload);
+                break;
+            case playerState.Die:
+                {
+                   _anim.SetBool("death", true);
+                }
+                break;
+        }
+
     }
 
     // Update is called once per frame
     void FixedUpdate()
-    {  
-        PlayerCamView(CurView);
+    {
+
+
+        switch (state)
+        {
+            case playerState.Idle:
+            case playerState.Move:
+            case playerState.Fire:
+                    PlayerCamView(CurView);
+                    break;
+            case playerState.Die:
+                {
+                    
+                }break;
+        }
     }
 
     public void OnSwitchBtn(bool isFPS)

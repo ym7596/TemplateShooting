@@ -13,6 +13,8 @@ public class BossInfo : MonoBehaviour, Observer
 
     private float _maxBossHP = 1000;
     private float _currentBossHP = 0;
+    [SerializeField]
+    private BossState _bossState;
     public float maxbossHP
     {
         get { return _maxBossHP; }
@@ -50,6 +52,10 @@ public class BossInfo : MonoBehaviour, Observer
             int damage = col.gameObject.GetComponent<Bullet>().bulletDamage;
             currentHP -= damage;
             HPStats.instance.SetChangeStat();
+            if(currentHP <= 0)
+            {
+                _bossState.state = bossState.Die;
+            }
         }
     }
 }

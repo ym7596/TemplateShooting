@@ -171,7 +171,7 @@ public class InGameUI : SingleTon<InGameUI>
 
     public void GameOverResult(string winnertxt)
     {
-        countDown = 5;
+        countDown = 3;
         _resultPanel.SetActive(true);
         resultTxt = winnertxt;
         StopAllCoroutines();
